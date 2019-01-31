@@ -46,3 +46,31 @@ app.get("api/waitlist", function(req, res) {
     
   });
 });
+
+
+// Clear all tables
+app.delete("/api/tables", function(req, res) {
+  connection.query("DELETE FROM tables", function(err, result) {
+    if (err) throw err;
+    res.json(result);
+  });
+});
+
+// Render tables.html at the "/tables" path
+app.get("/tables", function(req, res) {
+  res.sendFile(path.join(__dirname, "./public/tables.html"));
+});
+
+// Render reserve.html at the "/reserve" path
+app.get("/reserve", function(req, res) {
+  res.sendFile(path.join(__dirname, "./public/reserve.html"));
+});
+
+// All other paths serve the home.html page
+app.get("*", function(req, res) {
+  res.sendFile(path.join(__dirname, "./public/home.html"));
+});
+
+app.listen(PORT, function() {
+  console.log("App listening on PORT: " + PORT);
+});
